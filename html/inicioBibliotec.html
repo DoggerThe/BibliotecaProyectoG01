@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Ecua Librería - Bibliotecario</title>
+    <link rel="stylesheet" href="../css/estiloGeneral.css">
+    <link rel="stylesheet" href="../css/estilioInicio.css">
+</head>
+
+<body>
+
+    <div class="container-general">
+        <header class="header">
+            <h1 class="welcome">Bienvenido Bibliotecario</h1>
+
+            <div class="button-group">
+                <!-- Botón para cerrar sesión -->
+                <button class="logout-btn" onclick="cerrar()">CERRAR SESIÓN</button>
+                <!-- Botón con ícono de usuario -->
+                <button class="image-button" onclick="">
+                    <img src="../img/user.png" alt="Login">
+                </button>
+            </div>
+        </header>
+
+        <div class="separator"></div>
+
+        <aside class="sidebar">
+            <div class="menu-list">
+                <!-- Acceso al listado de libros -->
+                <button class="menu-button" onclick="">Libros</button>
+                <!-- Acceso a solicitudes de préstamos realizados por los usuarios -->
+                <button class="menu-button" onclick="">Solicitudes de Préstamos</button>
+                <!-- Acceso al historial de préstamos registrados en el sistema -->
+                <button class="menu-button" onclick="">Listado de Préstamos</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="main-title">Bienvenido a EcuaLibrería</h1>
+
+            <img src="../img/bibliotecaPerfil.jpg" alt="Presentacion Biblioteca" class="welcome-library">
+        </main>
+    </div>
+    <script>
+        function cerrar() {
+            window.location.href = "../index.html"; // Redirige a la página de inicio
+        }
+    </script>
+</body>
+
+</html>

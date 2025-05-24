@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecua Librería - Perfil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/estiloPerfilUsuario.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <header class="header">
+            <h1 class="welcome">"Leer, aprender, crecer - Todo en un solo lugar"</h1>
+            <div class="button-group">
+                <button class="logout-btn" onclick="">CERRAR SESIÓN</button>
+            </div>
+        </header>
+
+        <div class="separator"></div>
+
+        <aside class="sidebar">
+            <div class="menu-list">
+                <button class="menu-item" onclick="">Libros</button>
+                <button class="menu-item" onclick="">Listado de Préstamos</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="profile-header">
+                <div class="profile-imagen-container">
+                    <img src="../img/usuariofoto.png" alt="Foto de perfil" class="profile-pic">
+                </div>
+                <div class="user-basic-info">
+                    <h3 class="user-role">Bibliotecario</h3>
+                    <p class="user-status">🟢 En línea</p>
+                </div>
+            </div>
+
+            <form class="profile-form">
+                <div class="profile-section">
+                    <div class="profile-field">
+                        <label for="nombres" class="field-title">Nombres</label>
+                        <input type="text" id="nombres" class="field-input" value="Daniel Andrés" readonly>
+                    </div>
+                    <div class="profile-field">
+                        <label for="apellidos" class="field-title">Apellidos</label>
+                        <input type="text" id="apellidos" class="field-input" value="Martínez Gamarra" readonly>
+                    </div>
+                    <div class="profile-field">
+                        <label for="cedula" class="field-title">Cédula</label>
+                        <input type="text" id="cedula" class="field-input" value="0930622840" readonly>
+                    </div>
+                    <div class="profile-field">
+                        <label for="correo" class="field-title">Correo electrónico</label>
+                        <input type="email" id="correo" class="field-input" value="DanielM@hotmail.com" readonly>
+                    </div>
+                    <div class="profile-field address-field">
+                        <label for="direccion" class="field-title">Dirección Domiciliaria</label>
+                        <input type="text" id="direccion" class="field-input" value="Duran - Cdla El Recreo Mz 559 V7" readonly>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button type="button" class="change-password-btn" onclick="CambiarContrasena()">Cambiar Contraseña</button>
+                </div>
+            </form>
+
+            <div id="modal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span class="close" onclick="">&times;</span>
+                    <h2>Cambiar contraseña</h2>
+                    <div class="modal-field">
+                        <label for="ContrasenaAntigua">Contraseña actual:</label>
+                        <input type="password" id="ContrasenaAntigua" required>
+                    </div>
+                    <div class="modal-field">
+                        <label for="ContrasenaNueva">Nueva contraseña:</label>
+                        <input type="password" id="ContrasenaNueva" required>
+                    </div>
+                    <div class="modal-field">
+                        <label for="ContrasenaNuevaConfir">Confirmar nueva contraseña:</label>
+                        <input type="password" id="ContrasenaNuevaConfir" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button onclick="">Confirmar Cambio</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        function CambiarContrasena() {
+            const modal = document.getElementById("modal");
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("modal");
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById("modal");
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        document.querySelector(".close").addEventListener("click", closeModal);
+    </script>
+</body>
+
+</html>
