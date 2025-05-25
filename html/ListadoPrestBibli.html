@@ -16,9 +16,9 @@
         <header class="header">
             <h1 class="welcome"><a href="">Bienvenido Bibliotecario</a></h1> <!-- Link a la página de inicio -->
 
-            <div class="button-group"> <!-- Grupo de botones de usuario -->
+            <div class="button-group"> <!-- Grupo de botones de usuario location.href='perfilUsuario.html'-->
                 <!-- Botón para cerrar sesión -->
-                <button class="logout-btn" onclick="">CERRAR SESIÓN</button>
+                <button class="logout-btn" onclick="cerrar()">CERRAR SESIÓN</button>
                 <!-- Botón con imagen del usuario (aquí no tiene funcionalidad concreta aún) -->
                 <button class="image-button" onclick="">
                     <img src="../img/user.png" alt="Login">
@@ -31,9 +31,9 @@
         <aside class="sidebar">
             <div class="menu-list">
                 <!-- Botones para acceder a distintas funcionalidades -->
-                <button class="menu-button" onclick="">Libros</button>
-                <button class="menu-button" onclick="">Solicitudes de Préstamos</button>
-                <button class="menu-button" onclick="">Listado de Préstamos</button>
+                <button class="menu-button" onclick="location.href='ListadoLibrosBibli.html'">Libros</button>
+                <button class="menu-button" onclick="location.href='SolicPrestBibli.html'">Solicitudes de Préstamos</button>
+                <button class="menu-button" onclick="location.href='ListadoPrestBibli.html'">Listado de Préstamos</button>
             </div>
         </aside>
         <!-- Contenedor general que agrupa ambas secciones de préstamos activos e inactivos -->
@@ -188,6 +188,11 @@
                 </div>
             </div>
         </div>
+    <script>
+        function cerrar() {
+            window.location.href = "../index.html"; // Redirige a la página de inicio
+        }
+    </script>
 </body>
 
 </html>

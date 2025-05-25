@@ -19,8 +19,8 @@
             <!-- Grupo de botones del lado derecho del encabezado -->
             <div class="button-group">
                 <!-- Botón para cerrar sesión -->
-                <button class="logout-btn" onclick="">CERRAR SESIÓN</button>
-                <!-- Botón con ícono de usuario (actualmente sin funcionalidad asignada) -->
+                <button class="logout-btn" onclick="cerrar()">CERRAR SESIÓN</button>
+                <!-- Botón con ícono de usuario location.href='perfilUsuario.html'-->
                 <button class="image-button" onclick="">
                     <img src="../img/user.png" alt="Login">
                 </button>
@@ -34,11 +34,11 @@
         <aside class="sidebar">
             <div class="menu-list">
                 <!-- Enlace a la vista de listado de libros -->
-                <button class="menu-button" onclick="">Libros</button>
+                <button class="menu-button" onclick="location.href='ListadoLibrosBibli.html'">Libros</button>
                 <!-- Enlace a la vista actual: solicitudes de préstamo -->
-                <button class="menu-button" onclick="">Solicitudes de Préstamos</button>
+                <button class="menu-button" onclick="location.href='SolicPrestBibli.html'">Solicitudes de Préstamos</button>
                 <!-- Enlace al listado de todos los préstamos existentes -->
-                <button class="menu-button" onclick="">Listado de Préstamos</button>
+                <button class="menu-button" onclick="location.href='ListadoPrestBibli.html'">Listado de Préstamos</button>
             </div>
         </aside>
         <!-- Contenedor general para la tabla de solicitudes -->
@@ -131,6 +131,10 @@
         span.onclick = function() {
             const modal = document.getElementById('modal');
             modal.style.display = "none";
+        }
+
+        function cerrar() {
+            window.location.href = "../index.html"; // Redirige a la página de inicio
         }
     </script>
 </body>

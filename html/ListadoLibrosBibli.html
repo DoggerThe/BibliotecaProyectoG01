@@ -20,8 +20,8 @@
         <a href="">Bienvenido Bibliotecario</a>
       </h1>
       <div class="button-group">
-        <!-- Botón de cerrar sesión (simulado) -->
-        <button class="logout-btn" onclick="">CERRAR SESIÓN</button>
+        <!-- Botón de cerrar sesión location.href='perfilUsuario.html' -->
+        <button class="logout-btn" onclick="cerrar()">CERRAR SESIÓN</button>
         <!-- Botón de usuario -->
         <button class="image-button" onclick="">
           <img src="../img/user.png" alt="Login">
@@ -33,9 +33,9 @@
     <!-- Barra lateral de navegación -->
     <aside class="sidebar">
       <div class="menu-list">
-        <button class="menu-button" onclick="">Libros</button>
-        <button class="menu-button" onclick="">Solicitudes de Préstamos</button>
-        <button class="menu-button" onclick="">Listado de Préstamos</button>
+        <button class="menu-button" onclick="location.href='ListadoLibrosBibli.html'">Libros</button>
+        <button class="menu-button" onclick="location.href='SolicPrestBibli.html'">Solicitudes de Préstamos</button>
+        <button class="menu-button" onclick="location.href='ListadoPrestBibli.html'">Listado de Préstamos</button>
       </div>
     </aside>
 
@@ -73,6 +73,12 @@
       </div>
     </div>
   </div>
+  <script>
+        function cerrar() {
+            window.location.href = "../index.html"; // Redirige a la página de inicio
+        }
+  </script>
+
 </body>
 
 </html>
