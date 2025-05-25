@@ -7,32 +7,25 @@ body {
     margin: 0;
 }
 
-/* Contenedor principal */
-.container-General-tabla {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.container-General {
     display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
+    justify-content: center;
+    /* centra horizontalmente */
+    align-items: center;
+    /* centra verticalmente */
 }
 
-/* Barra de búsqueda */
 .Container-Tabla {
     background-color: #fff;
     padding: 0em 2em 2em;
     border-radius: 10px;
-    max-width: 1300px;
-    margin: auto;
+    max-width: 1500px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    overflow-x: auto;
-    height: 320px;
-    margin-bottom: 1em;
-    /*Espacio hacia abajo */
+    height: 700px;
+    width: fit-content;
+    /* Se ajusta al contenido (por ejemplo, a una tabla) */
+    overflow: auto;
 }
-
 .welcome a {
     text-decoration: none;
     color: var(--color-white);

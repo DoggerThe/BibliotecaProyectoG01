@@ -30,7 +30,7 @@
                         <label for="contrasena">Contraseña</label>
                         <div class="contrasena-container">
                             <input type="password" id="contrasena" name="contrasena" placeholder="***********" required>
-                            <input type="checkbox" onclick="">
+                            <input type="checkbox" onclick="mostrarContrasena()">
                         </div>
                     </div>
 
@@ -65,6 +65,14 @@
             }
             // Redirigir a la página de inicio de sesión
             
+        }
+        function mostrarContrasena() {
+            var contrasenaInput = document.getElementById("contrasena");
+            if (contrasenaInput.type === "password") {
+                contrasenaInput.type = "text"; // Cambia a texto para mostrar la contraseña
+            } else {
+                contrasenaInput.type = "password"; // Cambia de nuevo a contraseña
+            }
         }
     </script>
 </body>
