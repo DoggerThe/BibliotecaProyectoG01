@@ -8,7 +8,7 @@ height="400px"
 />
 <br>
 <br>
-Grupo de Construccion de Software Sof-Ve-6-3
+Grupo #1 de DESARROLLO DE APLICACIONES WEB Sof-Ma-6-3
 ## 📝 Descripción:
 El **Sistema de Gestion de Prestamos Online de Biblioteca** es un sitio web que permite a usuarios registrados realizar solicitudes de préstamo desde cualquier lugar con acceso a Internet.
 Los **usuarios generales** pueden registrarse, buscar libros, visualizar información detallada y solicitar préstamos en línea. 
