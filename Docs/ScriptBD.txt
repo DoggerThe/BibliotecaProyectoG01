@@ -1,0 +1,63 @@
+-- Creamos la base de datos
+CREATE DATABASE IF NOT EXISTS BibliotecaDW CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE BibliotecaDW;
+
+-- Tabla de roles
+CREATE TABLE Rol (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(50) NOT NULL
+);
+
+-- Tabla de usuarios
+CREATE TABLE Usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cedula VARCHAR(20) NOT NULL UNIQUE,
+    nombre VARCHAR(100) NOT NULL,
+    apellido_paterno VARCHAR(100) NOT NULL,
+    apellido_materno VARCHAR(100),
+    correo VARCHAR(150) NOT NULL UNIQUE,
+    direccion VARCHAR(200),
+    contrasena VARCHAR(255) NOT NULL,
+    id_rol INT NOT NULL,
+    FOREIGN KEY (id_rol) REFERENCES Rol(id)
+);
+
+-- Tabla de géneros de libros
+CREATE TABLE GeneroLibros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    genero VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- Tabla de libros
+CREATE TABLE Libros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ISBN VARCHAR(20) NOT NULL UNIQUE,
+    titulo VARCHAR(200) NOT NULL,
+    id_genero INT NOT NULL,
+    autor VARCHAR(150),
+    editorial VARCHAR(150),
+    cantidad INT DEFAULT 0,
+    FOREIGN KEY (id_genero) REFERENCES GeneroLibros(id)
+);
+
+-- Tabla de estados de préstamo
+CREATE TABLE Estado (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    estado VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Tabla de préstamos
+CREATE TABLE Prestamo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,  -- El usuario que solicita
+    id_bibliotecario INT NOT NULL,  -- El usuario que autoriza (bibliotecario)
+    id_libro INT NOT NULL,
+    fecha_solicitud DATE NOT NULL,
+    fecha_inicio_prestamo DATE,
+    fecha_fin_prestamo DATE,
+    id_estado INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
+    FOREIGN KEY (id_bibliotecario) REFERENCES Usuario(id),
+    FOREIGN KEY (id_libro) REFERENCES Libros(id),
+    FOREIGN KEY (id_estado) REFERENCES Estado(id)
+);
