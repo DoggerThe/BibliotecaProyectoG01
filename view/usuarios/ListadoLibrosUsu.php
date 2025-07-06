@@ -1,6 +1,7 @@
 <?php
-require_once __DIR__ . '/../../helpers/auth.php';
-requireRole(1); // 1 es el rol de usuario normal
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -9,8 +10,8 @@ requireRole(1); // 1 es el rol de usuario normal
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecua Librería</title>
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/InicioGeneral.css">
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/ListadoLibrosUsu.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/InicioGeneral.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/ListadoLibrosUsu.css">
 </head>
 
 <body>
@@ -61,11 +62,11 @@ requireRole(1); // 1 es el rol de usuario normal
                 <button onclick="confirmarSolicitud()">Confirmar Solicitud</button>
             </div>
         </div>
-        <!-- Se inserta el ID del usuario desde la sesión PHP para usarlo en el script JS -->
         <script>
-            const idUsuario = <?php echo $_SESSION['usuario']['id']; ?>;
+            const rolUsuario = <?php echo isset($_SESSION['rolUsuario']) ? $_SESSION['rolUsuario'] : '0'?>;
+            const idUsuario = <?php echo isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : '0'?>;
         </script>
-        <script src="/SistemaBiblioteca/public/js/listarLibUsu.js"></script>
+        <script src="/BibliotecaProyectoG01/assets/js/listarLibUsu.js"></script>
 </body>
 
 </html>

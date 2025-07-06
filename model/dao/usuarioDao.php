@@ -1,11 +1,58 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../modelo/usuario.php';
 class usuarioDao{
     private $db;
-    public function __construct($db)
+    public function __construct($pdo)
     {
-        $this->db = $db;
+        $this->db = $pdo;
     }
     //Funciones a realizar
+    public function procesarRegistro(usuario $usuario): bool {
+        try{
+            $con = $this->db;
+            $sql = 'INSERT INTO usuario(cedula, nombre, apellido_paterno, apellido_materno, correo, direccion, contrasena, id_rol)
+                    VALUES (:cedula, :nombre, :apellido_paterno, :apellido_materno, :correo, :direccion, :contrasena, :id_rol) ';
+            $stmt = $con->prepare($sql);
+            $passHasheada = password_hash($usuario->contrasena, PASSWORD_BCRYPT);
+            $id_rol = $usuario->rol ?? 1;
+            $stmt->bindParam(':cedula', $usuario->cedula);
+            $stmt->bindParam(':nombre', $usuario->nombre);
+            $stmt->bindParam(':apellido_paterno', $usuario->apellido_paterno);
+            $stmt->bindParam(':apellido_materno', $usuario->apellido_materno);
+            $stmt->bindParam(':correo', $usuario->correo);
+            $stmt->bindParam(':direccion', $usuario->direccion);
+            $stmt->bindParam(':contrasena', $passHasheada);
+            $stmt->bindParam(':id_rol', $id_rol);
+            $valor = $stmt->execute();
+            return $valor;
+        }catch (PDOException $e){
+            error_log('Error al registrar usuario: ' . $e->getMessage());
+            return false;
+        }
+    }
+    public function procesarLogin(usuario $usuario){
+        try{
+            $con = $this->db;
+            $sql = 'SELECT * FROM usuario WHERE cedula = :cedula';
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':cedula', $usuario->cedula);
+            $stmt->execute();
+            $resp = $stmt->fetch();
+            if ($resp && password_verify($usuario->contrasena, $resp['contrasena'])) {
+                $usuarioData = [
+                    'id_rol' => $resp['id_rol'],
+                    'nombre' => $resp['nombre'],
+                    'id' => $resp['id']
+                ];
+                return $usuarioData;
+            }
+            return false;
+
+        }catch (PDOException $e){
+            error_log('Error al iniciar sesion: ' . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

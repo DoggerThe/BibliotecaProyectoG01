@@ -34,6 +34,9 @@
                             <input type="checkbox" onclick="mostrarContrasena('contrasena')">
                         </div>
                     </div>
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+                        <p style="color: red;">Error al logear.</p>
+                    <?php endif; ?>
                     <!-- Botón para enviar el formulario -->
                     <button type="submit" class="boton-registro">Iniciar Sesión</button>
                 </form>

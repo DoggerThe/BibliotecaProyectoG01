@@ -20,31 +20,35 @@
             <img src="/BibliotecaProyectoG01/assets/img/Logobiblioteca.png" alt="Logo Biblioteca" class="logo">
             <div class="contenedor-formulario">
                 <h1>Biblioteca</h1>
-                <form action="/BibliotecaProyectoG01/index.php?action=registrar" method="POST" onsubmit="return validarContrasenas()">
+                <form action="/BibliotecaProyectoG01/index.php?accion=registrarUsuario" method="POST" onsubmit="return validarContrasenas()">
                     <!-- Campo: Nombre -->
                     <div class="grupo-formulario">
                         <label for="nombre">NOMBRE</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Nombre" value="<?= htmlspecialchars($old['nombre'] ?? '') ?>" required>
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
                     </div>
-                    <!-- Campo: Apellido -->
+                    <!-- Campo: Apellidos -->
                     <div class="grupo-formulario">
-                        <label for="apellido">APELLIDO</label>
-                        <input type="text" id="apellido" name="apellido" placeholder="Apellido" value="<?= htmlspecialchars($old['apellido'] ?? '') ?>" required>
+                        <label for="apellidoPater">PRIMER APELLIDO</label>
+                        <input type="text" id="apellidoPater" name="apellidoPater" placeholder="Primer Apellido" required>
+                    </div>
+                    <div class="grupo-formulario">
+                        <label for="apellidoMater">SEGUNDO APELLIDO</label>
+                        <input type="text" id="apellidoMater" name="apellidoMater" placeholder="Segundo Apellido" required>
                     </div>
                     <!-- Campo: Cédula -->
                     <div class="grupo-formulario">
                         <label for="cedula">CÉDULA</label>
-                        <input type="text" id="cedula" name="cedula" maxlength="10" minlength="10" placeholder="0999999999" value="<?= htmlspecialchars($old['cedula'] ?? '') ?>" required>
+                        <input type="text" id="cedula" name="cedula" maxlength="10" minlength="10" placeholder="0999999999" required>
                     </div>
                     <!-- Campo: Correo electrónico -->
                     <div class="grupo-formulario">
                         <label for="email">CORREO ELECTRÓNICO</label>
-                        <input type="email" id="email" name="email" placeholder="correo@example.com" value="<?= htmlspecialchars($old['email'] ?? '') ?>" required>
+                        <input type="email" id="email" name="email" placeholder="correo@example.com" required>
                     </div>
                     <!-- Campo: Dirección -->
                     <div class="grupo-formulario">
                         <label for="direccion">DIRECCIÓN</label>
-                        <input type="text" id="direccion" name="direccion" placeholder="Direccion" value="<?= htmlspecialchars($old['direccion'] ?? '') ?>" required>
+                        <input type="text" id="direccion" name="direccion" placeholder="Direccion" required>
                     </div>
                     <!-- Campo: Contraseña -->
                     <div class="grupo-formulario">
@@ -62,16 +66,11 @@
                             <input type="checkbox" onclick="mostrarContrasena('confirmar')">
                         </div>
                     </div>
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+                        <p style="color: red;">Error al registrar.</p>
+                    <?php endif; ?>
 
                     <button type="submit" class="boton-registro">REGISTRARME</button>
-
-                    <div id="modal" class="modal">
-                        <div class="modal-contenido">
-                            <span class="cerrar" id="cerrarModal">&times;</span>
-                            <h2>Alerta</h2>
-                            <p>Las contraseñas no coinciden</p>
-                        </div>
-                    </div>
                 </form>
                 <p class="texto-inicio-sesion">¿Ya tienes cuenta? <a href="/BibliotecaProyectoG01/index.php?accion=login"> INICIAR SESIÓN </p>
             </div>

@@ -1,52 +1,62 @@
 // Evento que se ejecuta cuando el DOM ha sido completamente cargado.
 // Solicita al backend la lista de libros disponibles y los muestra en la tabla.
-document.addEventListener("DOMContentLoaded", function () {
-    fetch('/SistemaBiblioteca/index.php?action=listarLibrosDisponibles')
-        .then(res => res.json())
-        .then(data => {
-            const tbody = document.querySelector("#tablaLibros tbody");
-            tbody.innerHTML = "";// Limpia la tabla antes de agregar nuevos datos
-
-            if (data.length === 0){
-                const tr = document.createElement("tr");
-                tr.innerHTML = `<td colspan = "6" class="text-center">No hay libros para solicitar :C</td>`;
-                tbody.appendChild(tr);
-                return;
-            }else{
-                data.forEach(Libro => {
-                    const tr = document.createElement("tr");
-                    // Inserta los datos del libro en la fila de la tabla
-                    tr.innerHTML = `
-                        <td>${Libro.id}</td>
-                        <td>${Libro.titulo}</td>
-                        <td>${Libro.autor}</td>
-                        <td>${Libro.genero}</td>
-                        <td>${Libro.cantidad}</td>
-                        <td class="acciones">
-                            <button class="btn-confirmar" title="Confirmar">
-                                <i class="fas fa-check"></i> Solicitar
-                            </button>
-                        </td>
-                    `;
+document.addEventListener("DOMContentLoaded", async() =>{//REFAC
+    const Data = new URLSearchParams();
+    Data.append("rolUsuario", rolUsuario);
+    try{
+        const response = await fetch('/BibliotecaProyectoG01/index.php?accion=listarLibros',{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: Data.toString()
+        })
+        const resol = await response.json();
+        
+        const tbody = document.querySelector("#tablaLibros tbody");
+        tbody.innerHTML = "";// Limpia la tabla antes de agregar nuevos datos
     
-                    // Añadir evento al botón desde JS
-                    const btn = tr.querySelector(".btn-confirmar");
-                    btn.addEventListener("click", () => Solicitar(btn));
-                    // Agrega la fila a la tabla
-                    tbody.appendChild(tr);
-                });
-            }
-        });
+        if (resol.length === 0){
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td colspan = "6" class="text-center">No hay libros para solicitar :C</td>`;
+            tbody.appendChild(tr);
+            return;
+        }else{
+            resol.forEach(Libro => {
+                const tr = document.createElement("tr");
+                // Inserta los datos del libro en la fila de la tabla
+                tr.innerHTML = `
+                    <td>${Libro.id}</td>
+                    <td>${Libro.titulo}</td>
+                    <td>${Libro.autor}</td>
+                    <td>${Libro.genero}</td>
+                    <td>${Libro.cantidad}</td>
+                    <td class="acciones">
+                        <button class="btn-confirmar" title="Confirmar">
+                            <i class="fas fa-check"></i> Solicitar
+                        </button>
+                    </td>
+                `;
+    
+                // Añadir evento al botón desde JS
+                const btn = tr.querySelector(".btn-confirmar");
+                btn.addEventListener("click", () => Solicitar(btn));
+                // Agrega la fila a la tabla
+                tbody.appendChild(tr);
+            });
+        }
+    }catch(error){
+        console.error('error en solicitud: ', error.message);
+    }
 });
 // Función que maneja la solicitud de un libro cuando el usuario hace clic en "Solicitar"
-function Solicitar(btn) {
+function Solicitar(btn) {//REFAC
     const fila = btn.closest("tr");
     const celdas = fila.children;
     // Almacena la información del libro seleccionado
     libroSeleccionado = {
         id: celdas[0].textContent.trim(),
         titulo: celdas[1].textContent.trim()
-
     };
 
     // Muestra la información del libro en el modal
@@ -72,14 +82,8 @@ function Solicitar(btn) {
     //muestra el modal
     document.getElementById("modal").style.display = "block";
 }
-/*
- * Cierra el modal de solicitud de libro.
- */
-function cerrarModal() {
-    document.getElementById("modal").style.display = "none";
-}
 // Ajusta la fecha final en función de la fecha de inicio seleccionada
-document.getElementById("fechaInicio").addEventListener("change", function () {
+document.getElementById("fechaInicio").addEventListener("change", function () {//REFAC
     const inicio = new Date(this.value);
     if (isNaN(inicio)) return;// Si la fecha de inicio no es válida, no hace nada
 
@@ -95,10 +99,16 @@ document.getElementById("fechaInicio").addEventListener("change", function () {
     fechaFinInput.value = '';// Resetea el valor de fecha final
 });
 /*
+ * Cierra el modal de solicitud de libro.
+ */
+function cerrarModal() {//REFAC
+    document.getElementById("modal").style.display = "none";
+}
+/*
  * Función que comunica la solicitud al backend para registrar la solicitud de préstamo.
  * Se envía la fecha de inicio, fecha de fin y otros datos necesarios.
  */
-function confirmarSolicitud() {
+async function confirmarSolicitud() {
     const fechaInicio = document.getElementById("fechaInicio").value;
     const fechaFin = document.getElementById("fechaFin").value;
     // Verifica que ambas fechas estén seleccionadas
@@ -119,24 +129,24 @@ function confirmarSolicitud() {
     datos.append("fecha_solicitud", fechaSolicitud);
 
     // Envia los datos al backend para procesar la solicitud
-    fetch('/SistemaBiblioteca/index.php?action=solicitarLibro', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: datos.toString()
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            alert("Solicitud realizada con éxito.");
+    try{
+        const response = await fetch('/BibliotecaProyectoG01/index.php?accion=solicitarLibro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: datos.toString()
+        })
+        const resol = await response.json();
+    
+        if (resol.success) {
+            alert(resol.mensaje);
             cerrarModal();
             location.reload(); // Recarga la página para actualizar la tabla
         } else {
-            alert("Error al realizar la solicitud: " + data.message);
+            alert("Error al realizar la solicitud: " + resol.mensaje);
         }
-    })
-    .catch(error => {
-        console.error("Error al enviar la solicitud:", error);
-    });
+    }catch(error){
+        console.error('error en solicitud: ', error.message);
+    }
 }

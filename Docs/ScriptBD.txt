@@ -50,7 +50,7 @@ CREATE TABLE Estado (
 CREATE TABLE Prestamo (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,  -- El usuario que solicita
-    id_bibliotecario INT NOT NULL,  -- El usuario que autoriza (bibliotecario)
+    id_bibliotecario INT,  -- El usuario que autoriza (bibliotecario)
     id_libro INT NOT NULL,
     fecha_solicitud DATE NOT NULL,
     fecha_inicio_prestamo DATE,
