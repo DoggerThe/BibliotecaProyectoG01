@@ -1,0 +1,13 @@
+.main-title {
+  color: var(--color-titulos-negritos);
+  font-size: clamp(3rem, 4vw, 4rem);
+  text-align: center;
+  margin: 1rem;
+}
+.welcome-library {
+  display: block;
+  margin: 0.25rem auto 0;
+  width: 56%;
+  object-fit: contain;
+  border-radius: 1rem;
+}

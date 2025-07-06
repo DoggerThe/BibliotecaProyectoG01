@@ -1,0 +1,168 @@
+.Elementos-container {
+  background-color: white;
+  width: 90%;
+  max-width: 1000px;
+  margin: 2rem auto; /* centra horizontalmente */
+  padding: 2rem 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* sombra elegante */
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 3rem;
+  margin-left: 10rem;
+}
+.profile-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 250px; /* espacio manual, puedes cambiar el valor */
+}
+
+.change-password-btn {
+  background-color: #254fad;
+  font-family: "Poppins", sans-serif;
+  border-radius: 2.5rem;
+  width: 14rem;
+  height: 3rem;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+}
+.profile-section-columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  margin-left: 6rem;
+  margin-right: 6rem;
+  margin-top: 5rem;
+}
+
+.profile-column {
+  flex: 1;
+}
+
+.profile-column .profile-field {
+  width: 100%;
+}
+
+.change-password-btn:hover {
+  background-color: #1c3e91;
+}
+.profile-form {
+  width: 100%; /* antes estaba en 1200px */
+  max-width: 1200px;
+}
+.profile-section {
+  margin: 0 auto;
+  margin-left: 6rem;
+  margin-top: 1.5rem;
+}
+
+.profile-field {
+  margin-bottom: 1.5rem;
+  padding: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+.field-input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.375rem;
+  background-color: #f9f9f9;
+}
+
+.field-input[readonly] {
+  background-color: #f9f9f9;
+  color: #888;
+  border: none;
+  cursor: default;
+  outline: none;
+}
+.field-title {
+  font-family: "Poppins", sans-serif;
+  display: block;
+  margin-bottom: 1.2rem;
+  font-weight: bold;
+  padding-left: 0.2rem;
+  font-size: 110%;
+
+  position: relative;
+  z-index: 2;
+}
+.field-value {
+  background-color: rgba(217, 217, 217, 0.15);
+  border-radius: 12px;
+  width: 50%;
+  opacity: 0.47;
+  padding: 0.8rem 1.2rem;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.25),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.25);
+  border: none;
+  color: #000;
+  font-family: "Poppins", sans-serif;
+}
+.hidden {
+  display: none;
+}
+.field-input {
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.25),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.25);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  margin: auto;
+  width: 350px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-field {
+  margin-bottom: 15px;
+}
+
+.modal-field label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.modal-field input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.modal-actions {
+  text-align: right;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
