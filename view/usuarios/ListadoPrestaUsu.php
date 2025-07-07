@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,8 +10,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecua Librería</title>
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/InicioGeneral.css">
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/SolicPrestBibli.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/InicioGeneral.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/SolicPrestBibli.css">
 </head>
 
 <body>
@@ -35,9 +40,9 @@
             </div>
         </div>
         <script>
-            const idUsuario = <?php echo $_SESSION['usuario']['id']; ?>;
+            const idUsuario = <?php echo isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : '0'?>;
         </script>
-        <script src="/SistemaBiblioteca/public/js/ListadoPrestaUsu.js"></script>
+        <script src="/BibliotecaProyectoG01/assets/js/ListadoPrestaUsu.js"></script>
     </div>
 </body>
 

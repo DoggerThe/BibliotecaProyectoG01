@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async() =>{//REFAC
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: Data.toString()
-        })
+        });
         const resol = await response.json();
         
         const tbody = document.querySelector("#tablaLibros tbody");
@@ -108,7 +108,7 @@ function cerrarModal() {//REFAC
  * Función que comunica la solicitud al backend para registrar la solicitud de préstamo.
  * Se envía la fecha de inicio, fecha de fin y otros datos necesarios.
  */
-async function confirmarSolicitud() {
+async function confirmarSolicitud() {//REFAC
     const fechaInicio = document.getElementById("fechaInicio").value;
     const fechaFin = document.getElementById("fechaFin").value;
     // Verifica que ambas fechas estén seleccionadas

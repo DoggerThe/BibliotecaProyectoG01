@@ -32,5 +32,25 @@ class prestamoControlador{
         echo json_encode($respuesta);
         exit();
     }
+    public function listarPrestamos($post){
+        $prestamo = new prestamo();
+        $prestamo->usuario = $post['id_usuario'];
+        $prestamo->estado = $post['estado'];
+
+        $Dao = $this->prestamoDao;
+        $respuesta  = $Dao->listarPrestamos($prestamo);
+        $saneado = [];
+        foreach($respuesta as $row){
+            $saneado[] = [
+                'id_prestamo' => $row['id'],
+                'libro' => $row['libro'],
+                'fecha_inicio' => $row['fecha_inicio_prestamo'],
+                'fecha_fin' => $row['fecha_fin_prestamo']
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($saneado);
+        exit();
+    }
 }
 ?>

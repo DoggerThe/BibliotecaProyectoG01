@@ -59,6 +59,9 @@
         case 'solicitarLibro':
             $prestamoControlador->solicitarLibro($_POST);
             break;
+        case 'listarPrestamos':
+            $prestamoControlador->listarPrestamos($_POST);
+            break;
         default:
             include 'view/generales/lobby.php';
             break;

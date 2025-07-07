@@ -27,5 +27,23 @@ class prestamoDao{
             return false;
         }
     }
+    public function listarPrestamos(prestamo $prestamo) :array{
+        try{
+            $con = $this->db;
+            $sql = 'SELECT 
+                        p.id, l.titulo AS libro, p.fecha_inicio_prestamo, p.fecha_fin_prestamo
+                    FROM prestamo p
+                    INNER JOIN libros l ON p.id_libro = l.id
+                    WHERE p.id_usuario = :id_usuario AND p.id_estado = :id_estado;';
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':id_usuario',$prestamo->usuario);
+            $stmt->bindParam(':id_estado',$prestamo->estado);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }catch (PDOException $e){
+            error_log('Error: ' . $e->getMessage());
+            return [];
+        }
+    }
 }
 ?>
