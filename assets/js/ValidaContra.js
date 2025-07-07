@@ -2,7 +2,7 @@
  * Función para mostrar u ocultar la contraseña
  * Cambia el tipo del input de 'password' a 'text' y viceversa
  */
-function mostrarContrasena(id) {
+function mostrarContrasena(id) {//REFAC
     var input = document.getElementById(id);
     if (input.type === "password") {
         input.type = "text";
@@ -14,7 +14,7 @@ function mostrarContrasena(id) {
  * Función de validación para asegurarse de que las contraseñas coincidan
  * (Usada principalmente en el formulario de registro)
 */
-function validarContrasenas() {
+function validarContrasenas() {//REFAC
     var contrasena = document.getElementById('contrasena').value;
     var confirmarContrasena = document.getElementById('confirmar').value;
 

@@ -52,5 +52,28 @@ class prestamoControlador{
         echo json_encode($saneado);
         exit();
     }
+    public function cancelarSolicitudLibro($post){
+        $prestamo = new prestamo();
+        $prestamo->estado = $post['estado'];
+        $prestamo->usuario = $post['idUser'];
+        $prestamo->id = $post['id_prestamo'];
+        
+        $Dao = $this->prestamoDao;
+        $respuesta = $Dao->cancelarSolicitudLibro($prestamo);
+        if($respuesta >= 1){
+            $resp = [
+                'success' => true,
+                'mensaje' => 'Se actualizo con exito'
+            ];
+        }else{
+            $resp = [
+                'success' => false,
+                'mensaje' => 'No se pudo actualizar'
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($resp);
+        exit();
+    }
 }
 ?>

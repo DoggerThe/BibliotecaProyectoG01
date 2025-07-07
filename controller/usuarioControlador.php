@@ -6,10 +6,23 @@ require_once __DIR__ . '/../model/dao/usuarioDao.php';
 require_once __DIR__ . '/../model/modelo/usuario.php';
 
 class usuarioControlador{
+    //vistas
+    public function vistaInicio(){
+        require_once __DIR__ . '/../view/generales/lobby.php';
+    }
+    //AQUIIIIIIII <
+    //Procedimiento de verdad
     private $usuarioDao;
     public function __construct($pdo)
     {
         $this->usuarioDao = New UsuarioDao($pdo);
+    }
+    public static function logout() {
+        session_start();
+        session_unset();
+        session_destroy();
+        header("Location: index.php?accion=inicio");
+        exit;
     }
     public function procesarRegistro($post){
         $usuario = new usuario();

@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecua Librería</title>
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/InicioGeneral.css">
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/SolicPrestBibli.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/InicioGeneral.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/SolicPrestBibli.css">
 </head>
 
 <body>
@@ -30,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Cuerpo de la tabla que será llenado dinámicamente mediante JavaScript (AJAX) -->
+                        
                     </tbody>
                 </table>
             </div>
@@ -52,9 +52,9 @@
         </div>
         <!-- Se pasa el id del usuario desde PHP al script JS -->
         <script>
-            const idUsuario = <?php echo $_SESSION['usuario']['id']; ?>;
+            const idUsuario = <?php echo isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : '0'?>;
         </script>
-        <script src="/SistemaBiblioteca/public/js/ListadoSoliPrestaUsu.js"></script>
+        <script src="/BibliotecaProyectoG01/assets/js/ListadoSoliPrestaUsu.js"></script>
     </div>
 </body>
 

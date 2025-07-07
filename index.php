@@ -21,13 +21,17 @@
     switch ($accion){
         //rutas de cambio de pagina
         case 'inicio':
-            include 'view/generales/lobby.php';
+            $usuarioControlador->vistaInicio();
+            //include 'view/generales/lobby.php';
             break;
         case 'login':
             include 'view/generales/login.php';
             break;
         case 'register':
             include 'view/generales/register.php';
+            break;
+        case 'logout':
+            $usuarioControlador->logout();
             break;
         //usuario
         case 'inicioUser':
@@ -62,9 +66,11 @@
         case 'listarPrestamos':
             $prestamoControlador->listarPrestamos($_POST);
             break;
+        case 'cancelarSolicitudLibro':
+            $prestamoControlador->cancelarSolicitudLibro($_POST);
+            break;
         default:
             include 'view/generales/lobby.php';
             break;
     }
-
 ?>

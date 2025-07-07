@@ -45,5 +45,24 @@ class prestamoDao{
             return [];
         }
     }
+    public function cancelarSolicitudLibro(prestamo $prestamo){
+        try{
+            $con = $this->db;
+            $sql = 'UPDATE prestamo 
+                    SET id_estado = :id_estado
+                    WHERE id_usuario = :id_usuario AND id = :id AND id_estado = :Previo';
+            $stmt = $con->prepare($sql);
+            $var = 3;
+            $stmt->bindParam(':id_estado',$prestamo->estado);
+            $stmt->bindParam(':id_usuario',$prestamo->usuario);
+            $stmt->bindParam(':id',$prestamo->id);
+            $stmt->bindParam(':Previo', $var);
+            $stmt->execute();
+            return $stmt->rowCount();
+        }catch (PDOException $e){
+            error_log('Error: ' . $e->getMessage());
+            return 0;
+        }
+    }
 }
 ?>
