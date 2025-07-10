@@ -75,5 +75,54 @@ class prestamoControlador{
         echo json_encode($resp);
         exit();
     }
+    public function listarPrestamosBibli($post){
+        $prestamo = new prestamo();
+        $prestamo->estado = $post['estado'];
+        $Dao = $this->prestamoDao;
+        $respuesta = $Dao->listarPrestamosBibli($prestamo);
+        $saneado = [];
+        foreach($respuesta as $row){
+            $saneado[] = [
+                'id_prestamo'=>$row['id'],
+                'cedula_usuario'=>$row['cedula_usuario'],
+                'titulo_libro'=>$row['libro'],
+                'fecha_solicitud'=>$row['fecha_solicitud'],
+                'fecha_inicio'=>$row['fecha_inicio_prestamo'],
+                'fecha_fin'=>$row['fecha_fin_prestamo'],
+                'estado'=>$row['estado']
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($saneado);
+        exit();
+    }
+    public function AceptacionPrestamo($post){
+        $prestamo = new prestamo();
+        $prestamo->id = $post['idPrestamo'];
+        $prestamo->bibliotecario = $post['idBibliotecario'];
+        $prestamo->estado = $post['nuevoEstado'];
+        if($prestamo->estado == 1){
+            $mensaje = 'Se acepto el prestamo con exito.';
+        }elseif($prestamo->estado == 5){
+            $mensaje = 'Se denego el prestamo con exito.';
+        }
+        $Dao = $this->prestamoDao;
+        $respuesta = $Dao->AceptacionPrestamo($prestamo);
+        if($respuesta >= 1){
+            $res = [
+                'success' => true,
+                'mensaje' => $mensaje
+            ];
+        }
+        else{
+            $res = [
+                'success' => false,
+                'mensaje' => 'Ocurrio un problema.'
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($res);
+        exit();
+    }
 }
 ?>

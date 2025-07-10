@@ -17,5 +17,19 @@ class librosControlador{
         echo json_encode($resultado);
         exit();
     }
+    public function buscarLibro($post){
+        $termino = $post['termino'];
+        $id = $post['rolUsuario'];
+
+        if(empty($termino)){
+            $this->listarLibros($post);
+            exit();
+        } 
+
+        $resultado = $this->librosDao->buscarLibro($id, $termino);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
+        exit();
+    }
 }
 ?>

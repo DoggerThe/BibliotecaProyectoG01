@@ -1,7 +1,3 @@
-<?php
-require_once __DIR__ . '/../../helpers/auth.php';
-requireRole(2); // 2 es el rol de bibliotecario
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,8 +5,8 @@ requireRole(2); // 2 es el rol de bibliotecario
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ecua Librería - Bibliotecario</title>
-  <link rel="stylesheet" href="/SistemaBiblioteca/public/css/InicioGeneral.css">
-  <link rel="stylesheet" href="/SistemaBiblioteca/public/css/ListadoLibroBiblio.css">
+  <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/InicioGeneral.css">
+  <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/ListadoLibroBiblio.css">
 </head>
 
 <body>
@@ -42,7 +38,11 @@ requireRole(2); // 2 es el rol de bibliotecario
       </div>
     </div>
   </div>
-  <script src="/SistemaBiblioteca/public/js/busquedaLibros.js"></script>
+  <script> 
+    const rolUsuario = <?php echo isset($_SESSION['rolUsuario']) ? $_SESSION['rolUsuario'] : '0'?>;
+    const idUsuario = <?php echo isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : '0'?>; 
+  </script>
+  <script src="/BibliotecaProyectoG01/assets/js/busquedaLibros.js"></script>
 </body>
 
 </html>

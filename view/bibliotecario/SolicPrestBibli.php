@@ -1,7 +1,3 @@
-<?php
-require_once __DIR__ . '/../../helpers/auth.php';
-requireRole(2); // 2 es el rol de bibliotecario
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,8 +5,8 @@ requireRole(2); // 2 es el rol de bibliotecario
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecua Librería - Bibliotecario</title>
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/InicioGeneral.css">
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/SolicPrestBibli.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/InicioGeneral.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/SolicPrestBibli.css">
 </head>
 
 <body>
@@ -48,15 +44,21 @@ requireRole(2); // 2 es el rol de bibliotecario
                 <span class="close" onclick="cerrarModal()">&times;</span>
                 <h2>Detalles del Préstamo</h2>
                 <!-- Información detallada que se llenará dinámicamente con JavaScript -->
+                <p><strong>Cedula del usuario:</strong> <span id="modalCedula"></span></p>
                 <p><strong>Libro:</strong> <span id="modalLibro"></span></p>
                 <p><strong>Fecha de Solicitud:</strong> <span id="modalFechaSolicitud"></span></p>
                 <p><strong>Fecha de Inicio:</strong> <span id="modalFechaInicio"></span></p>
                 <p><strong>Fecha de Fin:</strong> <span id="modalFechaFin"></span></p>
                 <!-- Botón para confirmar la solicitud desde el modal -->
-                <button onclick="cambiarEstado()">Confirmar Solicitud</button>
+                <button onclick="cambiarEstado(1)">Confirmar Solicitud</button>
+                <button style="background-color: red;" onclick="cambiarEstado(5)">Denegar Solicitud</button>
             </div>
         </div>
-        <script src="/SistemaBiblioteca/public/js/listarSolicitudes.js"></script>
+        <script> 
+            const rolUsuario = <?php echo isset($_SESSION['rolUsuario']) ? $_SESSION['rolUsuario'] : '0'?>;
+            const idUsuario = <?php echo isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : '0'?>; 
+        </script>
+        <script src="/BibliotecaProyectoG01/assets/js/listarSolicitudes.js"></script>
     </div>
 </body>
 

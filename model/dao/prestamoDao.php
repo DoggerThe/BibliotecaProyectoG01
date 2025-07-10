@@ -64,5 +64,53 @@ class prestamoDao{
             return 0;
         }
     }
+    public function listarPrestamosBibli(prestamo $prestamo){
+        try{
+            $con = $this->db;
+            $estado = $prestamo->estado;
+            $sql = 'SELECT 
+                        p.id,
+                        u.cedula AS cedula_usuario,
+                        l.titulo AS libro,
+                        p.fecha_solicitud, 
+                        p.fecha_inicio_prestamo, 
+                        p.fecha_fin_prestamo,
+                        e.estado AS estado
+                    FROM prestamo p
+                    INNER JOIN libros l ON p.id_libro = l.id
+                    INNER JOIN estado e ON p.id_estado = e.id
+                    INNER JOIN usuario u ON p.id_usuario = u.id
+                    WHERE p.id_estado = :id_estado;';
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':id_estado', $estado);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }catch (PDOException $e){
+            error_log('Error: ' . $e->getMessage());
+            return [];
+        }
+    }
+    public function AceptacionPrestamo (prestamo $presta){
+        try{
+            $con = $this->db;
+            $idPres = $presta->id;
+            $idbibliotecario = $presta->bibliotecario;
+            $estadoNuevo = $presta->estado;
+            $sql = 'UPDATE prestamo 
+                    SET
+                        id_bibliotecario = :id_bibliotecario,
+                        id_estado = :id_estado
+                    WHERE id = :idPrestamo;';
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':id_bibliotecario', $idbibliotecario);
+            $stmt->bindParam(':id_estado', $estadoNuevo);
+            $stmt->bindParam(':idPrestamo', $idPres);
+            $stmt->execute();
+            return $stmt->rowCount();
+        }catch (PDOException $e){
+            error_log('Error: ' . $e->getMessage());
+            return 0;
+        }
+    }
 }
 ?>

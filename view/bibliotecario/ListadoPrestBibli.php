@@ -1,7 +1,3 @@
-<?php
-require_once __DIR__ . '/../../helpers/auth.php';
-requireRole(2); // 2 es el rol de bibliotecario
-?>
 <!DOCTYPE html>
 <html lang="en">
 
