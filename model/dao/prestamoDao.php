@@ -90,26 +90,149 @@ class prestamoDao{
             return [];
         }
     }
-    public function AceptacionPrestamo (prestamo $presta){
-        try{
+    public function AceptacionPrestamo(prestamo $presta) {
+        try {
             $con = $this->db;
+            $con->beginTransaction();
+
             $idPres = $presta->id;
             $idbibliotecario = $presta->bibliotecario;
             $estadoNuevo = $presta->estado;
-            $sql = 'UPDATE prestamo 
-                    SET
-                        id_bibliotecario = :id_bibliotecario,
-                        id_estado = :id_estado
-                    WHERE id = :idPrestamo;';
-            $stmt = $con->prepare($sql);
+
+            // Siempre actualizar el préstamo
+            $sqlPrestamo = 'UPDATE prestamo 
+                            SET id_bibliotecario = :id_bibliotecario,
+                                id_estado = :id_estado
+                            WHERE id = :idPrestamo';
+            $stmt = $con->prepare($sqlPrestamo);
             $stmt->bindParam(':id_bibliotecario', $idbibliotecario);
             $stmt->bindParam(':id_estado', $estadoNuevo);
             $stmt->bindParam(':idPrestamo', $idPres);
             $stmt->execute();
-            return $stmt->rowCount();
-        }catch (PDOException $e){
-            error_log('Error: ' . $e->getMessage());
+
+            // Solo si el estado es 1, obtener id_libro y restar la cantidad
+            if ($estadoNuevo == 1) {
+                // Obtener id_libro desde el préstamo
+                $sqlLibro = 'SELECT p.id_libro,
+                                    l.cantidad AS cantidad 
+                            FROM prestamo p
+                            INNER JOIN libros l ON p.id_libro = l.id 
+                            WHERE p.id = :idPrestamo';
+                $stmtLibro = $con->prepare($sqlLibro);
+                $stmtLibro->bindParam(':idPrestamo', $idPres);
+                $stmtLibro->execute();
+                $resultado = $stmtLibro->fetch();
+
+                if (!$resultado || !isset($resultado['id_libro']) || $resultado['cantidad'] <= 0) {
+                    // Si no se encuentra el libro, lanzar error
+                    throw new Exception("No se pudo obtener el libro asociado al préstamo.");
+                }
+
+                $idLibro = $resultado['id_libro'];
+
+                // Restar 1 a la cantidad del libro
+                $sqlActualizarLibro = 'UPDATE libros 
+                                    SET cantidad = cantidad - 1
+                                    WHERE id = :id_libro';
+                $stmtActualizar = $con->prepare($sqlActualizarLibro);
+                $stmtActualizar->bindParam(':id_libro', $idLibro);
+                $stmtActualizar->execute();
+            }
+            $con->commit();
+            return 1;
+
+        } catch (Exception $e) {
+            $con->rollBack();
+            error_log('Error en AceptacionPrestamo: ' . $e->getMessage());
             return 0;
+        }
+    }
+
+    public function marcarDevolucion(prestamo $prestam):bool{
+        try{
+            $con = $this->db;
+
+            $con->beginTransaction();
+
+            $idPres = $prestam->id;
+            $estado = $prestam->estado;
+
+            //actualizacion en prestamo
+            $sql = 'UPDATE prestamo
+                    SET
+                        id_estado = :id_estado
+                    WHERE id = :idPrestamo;';
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':id_estado', $estado);
+            $stmt->bindParam(':idPrestamo', $idPres);
+            $stmt->execute();
+
+            //obtencion de libro
+            $sqlLibro = 'SELECT id_libro FROM prestamo WHERE id = :idPrestamo;';
+            $stmtLib = $con->prepare($sqlLibro);
+            $stmtLib->bindParam(':idPrestamo', $idPres);
+            $stmtLib->execute();
+            $libro = $stmtLib->fetch();
+
+            if (!$libro || !isset($libro['id_libro'])) {
+                // Si no se encuentra el libro, lanzar error
+                throw new Exception("No se pudo obtener el libro asociado al préstamo.");
+            }
+            $idLibro = $libro['id_libro'];
+
+            //sumar 1 a la cantidad de los libros
+            $sqlActualizarLibro = 'UPDATE libros 
+                                    SET cantidad = cantidad + 1
+                                    WHERE id = :id_libro';
+            $stmtActualizar = $con->prepare($sqlActualizarLibro);
+            $stmtActualizar->bindParam(':id_libro', $idLibro);
+            $stmtActualizar->execute();
+
+            $con->commit();
+            
+            $conta = $stmtActualizar->rowCount();
+            if ($conta >= 1){
+                return true;
+            }else{
+                return false;
+            }
+        }catch (PDOException $e){
+            $con->rollBack();
+            error_log('Error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    public function buscarPrestamos(prestamo $prestamo){
+        try{
+            $con = $this->db;
+            $termino = '%' . $prestamo->termino . '%';
+            $estado = $prestamo->estado;
+            $sql = 'SELECT 
+                        p.id,
+                        u.cedula AS cedula_usuario,
+                        l.titulo AS libro,
+                        p.fecha_solicitud, 
+                        p.fecha_inicio_prestamo, 
+                        p.fecha_fin_prestamo
+                    FROM prestamo p
+                    INNER JOIN libros l ON p.id_libro = l.id
+                    INNER JOIN usuario u ON p.id_usuario = u.id
+                    WHERE   
+                        p.id_estado = :id_estado AND 
+                        (p.id LIKE :id OR
+                        u.cedula LIKE :cedula OR
+                        l.titulo LIKE :titulo);';
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':id_estado', $estado);
+            $stmt->bindParam(':id', $termino);
+            $stmt->bindParam(':cedula', $termino);
+            $stmt->bindParam(':titulo', $termino);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }catch (PDOException $e){
+            var_dump($e->getMessage());
+            error_log('Error: ' . $e->getMessage());
+            return [];
         }
     }
 }

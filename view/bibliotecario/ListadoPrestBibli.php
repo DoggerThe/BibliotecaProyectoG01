@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecua Librería - Bibliotecario</title>
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/InicioGeneral.css">
-    <link rel="stylesheet" href="/SistemaBiblioteca/public/css/ListadoPresBibli.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/InicioGeneral.css">
+    <link rel="stylesheet" href="/BibliotecaProyectoG01/assets/css/ListadoPresBibli.css">
 
 </head>
 
@@ -77,7 +77,7 @@
             </div>
         </div>
     </div>
-    <script src="/SistemaBiblioteca/public/js/prestamoBusqueda.js"></script>
+    <script src="/BibliotecaProyectoG01/assets/js/prestamoBusqueda.js"></script>
 </body>
 
 </html>

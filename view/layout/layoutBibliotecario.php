@@ -14,7 +14,6 @@
     <div class="menu-list">
         <!-- Acceso al listado de libros -->
         <button class="menu-button" onclick="location.href='index.php?accion=ListadoLibrosBibli'">Libros</button>
-        <button class="menu-button" onclick="location.href='index.php?accion=RegistroLibrosBibli'">Registro de Libros</button>
         <!-- Acceso a solicitudes de préstamos realizados por los usuarios -->
         <button class="menu-button" onclick="location.href='index.php?accion=SolicPrestBibli'">Solicitudes de Préstamos</button>
         <!-- Acceso al historial de préstamos registrados en el sistema -->

@@ -81,6 +81,9 @@
         case 'listarPrestamosBibli':
             $prestamoControlador->listarPrestamosBibli($_POST);
             break;
+        case 'marcarDevolucion':
+            $prestamoControlador->marcarDevolucion($_POST);
+            break;
         case 'listarPrestamos':
             $prestamoControlador->listarPrestamos($_POST);
             break;
@@ -89,6 +92,9 @@
             break;
         case 'AceptacionPrestamo':
             $prestamoControlador->AceptacionPrestamo($_POST);
+            break;
+        case 'buscarPrestamos':
+            $prestamoControlador->buscarPrestamos($_POST);
             break;
         default:
             include 'view/generales/lobby.php';

@@ -5,27 +5,35 @@ cargarTablaInactivos();
  * Función para buscar préstamos activos según un término ingresado por el usuario.
  * Se activa con el evento submit del formulario o botón correspondiente.
 */
-function cargarTablaActivos() {
-    const tipo = 'activos';
-    const action = 'obtenerActivos';
+function cargarTablaActivos() {//REFAC
+    const tipo = 1;
+    const estado = 'Activos';
     const tbody = '#tablaLibroPres tbody';
     const columnas = 7;
 
-    cargar(tipo, action, tbody, columnas);
+    cargar(tipo, estado, tbody, columnas);
 };
-function cargarTablaInactivos() {
-    const tipo = 'inactivos';
-    const action = 'obtenerInactivos';
+function cargarTablaInactivos() {//REFAC
+    const tipo = 2;
+    const estado = 'Inactivos';
     const Ntbody = '#tablaLibroPres2 tbody';
     const columnas = 6;
 
-    cargar(tipo, action, Ntbody, columnas);
+    cargar(tipo, estado, Ntbody, columnas);
 };
-async function cargar(tipo, action, Ntbody, columnas){
+async function cargar(tipo, estado, Ntbody, columnas){//REFAC
+    const Data = new URLSearchParams;
+    Data.append ("estado", tipo);
     try{
-        const response = await fetch(`/SistemaBiblioteca/index.php?action=${action}`);
+        const response = await fetch('/BibliotecaProyectoG01/index.php?accion=listarPrestamosBibli',{
+            method: 'POST',
+            headers:{
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: Data.toString()
+        });
         if (!response.ok) {
-            throw new Error(`Error al cargar los préstamos ${tipo}`);
+            throw new Error(`Error al cargar los préstamos ${estado}`);
         }
         const prestamos = await response.json();
 
@@ -33,9 +41,9 @@ async function cargar(tipo, action, Ntbody, columnas){
         tbody.innerHTML = ''; // Limpia la tabla antes de insertar nuevos datos
         if (prestamos.length === 0) {
             // Si no hay préstamos activos, muestra un mensaje
-            tbody.innerHTML = `<tr><td colspan="${columnas}">No hay préstamos ${tipo}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="${columnas}">No hay préstamos ${estado}</td></tr>`;
         } else {
-            if(tipo == "activos"){
+            if(tipo == 1){
                 prestamos.forEach(p => {
                     const tr = document.createElement("tr");
                     tr.innerHTML=`
@@ -89,8 +97,17 @@ document.getElementById('BusquedaActivos').addEventListener('submit', async (eve
         cargarTablaActivos(); // Si el término está vacío, recarga la tabla completa
         return;
     }
+    const Data = new URLSearchParams;
+    Data.append('termino', termino);
+    Data.append('estado', 1);
     try {
-        const response = await fetch(`/SistemaBiblioteca/index.php?action=buscarActivos&q=${encodeURIComponent(termino)}`);
+        const response = await fetch(`/BibliotecaProyectoG01/index.php?accion=buscarPrestamos`,{
+            method: 'POST',
+            headers:{
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: Data.toString()
+        });
         if (!response.ok) {
             throw new Error('Error al buscar préstamos activos');
         }
@@ -134,14 +151,22 @@ document.getElementById('BusquedaActivos').addEventListener('submit', async (eve
 
 document.getElementById('BusquedaInactivos').addEventListener('submit', async (event)=>{
     event.preventDefault();
-
     const termino = document.getElementById('busquedaInac').value.trim();
     if (termino === '') {
         cargarTablaInactivos(); // Si el término está vacío, recarga la tabla completa
         return;
     }
+    const Data = new URLSearchParams;
+    Data.append('termino', termino);
+    Data.append('estado', 2);
     try {
-        const response = await fetch(`/SistemaBiblioteca/index.php?action=buscarInactivos&q=${encodeURIComponent(termino)}`);
+        const response = await fetch(`/BibliotecaProyectoG01/index.php?accion=buscarPrestamos`,{
+            method: 'POST',
+            headers:{
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: Data.toString()
+        });
         if (!response.ok) {
             throw new Error('Error al buscar préstamos inactivos');
         }
@@ -172,21 +197,19 @@ document.getElementById('BusquedaInactivos').addEventListener('submit', async (e
         console.error('Error al buscar préstamos inactivos:', error);
     }
 })
-async function marcarDevolucion(prestamo){
+async function marcarDevolucion(prestamo){//REFAC
     if(confirm("Seguro que desea marcar como devuelto el prestamo: " + prestamo.id_prestamo)){
         try{
             const datos = new URLSearchParams();
-            datos.append("action", "marcarDevolucion");
             datos.append("idPrestamo", prestamo.id_prestamo);
-            datos.append("idUsuario", prestamo.usuario_id);
-            datos.append("idLibro", prestamo.libro_id)
-            const respon = await fetch('/SistemaBiblioteca/index.php',{
+            datos.append("estado", 2);
+            const respon = await fetch('/BibliotecaProyectoG01/index.php?accion=marcarDevolucion',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: datos.toString()
-            })
+            });
             const resol = await respon.json();
             if (resol){
                 alert ("Prestamo marcado como devuelto.");

@@ -8,5 +8,6 @@ class prestamo{
     public $fecha_inicio_prestamo;
     public $fecha_fin_prestamo;
     public $estado;
+    public $termino;
 }
 ?>

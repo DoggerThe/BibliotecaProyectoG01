@@ -117,11 +117,43 @@ class prestamoControlador{
         else{
             $res = [
                 'success' => false,
-                'mensaje' => 'Ocurrio un problema.'
+                'mensaje' => 'Ocurrio un problema o no se cuenta con libros.'
             ];
         }
         header('Content-Type: application/json');
         echo json_encode($res);
+        exit();
+    }
+    public function marcarDevolucion($post){
+        $prestamo = new prestamo();
+        $prestamo->id = $post['idPrestamo'];
+        $prestamo->estado = $post['estado'];
+        $Dao = $this->prestamoDao;
+        $respuesta = $Dao->marcarDevolucion($prestamo);
+        header('Content-Type: application/json');
+        echo json_encode($respuesta);
+        exit();
+    }
+    public function buscarPrestamos($post){
+        $prestamo = new prestamo();
+        $prestamo->estado = $post['estado'];
+        $prestamo->termino = $post['termino'];
+        $Dao = $this->prestamoDao;
+        $respuesta = $Dao->buscarPrestamos($prestamo);
+
+        $saneado = [];
+        foreach($respuesta as $row){
+            $saneado[] = [
+                'id_prestamo' => $row['id'],
+                'cedula_usuario' => $row['cedula_usuario'],
+                'titulo_libro' => $row['libro'],
+                'fecha_solicitud' => $row['fecha_solicitud'],
+                'fecha_inicio' => $row['fecha_inicio_prestamo'],
+                'fecha_fin' => $row['fecha_fin_prestamo']
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($saneado);
         exit();
     }
 }
