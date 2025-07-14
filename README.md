@@ -1,7 +1,7 @@
 # 📚  SISTEMA DE GESTION DE PRÉSTAMO  ONLINE DE  BIBLIOTECA
  
 <img
-src="img/logo.jpg"
+src="assets/img/logo.jpg"
 alt="logo"
 width="535px"
 height="400px"
