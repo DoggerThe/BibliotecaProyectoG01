@@ -49,6 +49,8 @@
   overflow-y: auto;
   overflow-x: auto;
   min-height: 630px;
+  height: 650px;
+  overflow: auto;
 }
 h1 {
   text-align: center;
