@@ -58,7 +58,7 @@
             </div>
 
             <div class="columna-derecha">
-                <h2 class="title-Ingreso">Lista de libros</h2>
+                <h2 class="title-Ingreso">Lista de prestamos</h2>
                 <div class="Container-Tabla">
                     <table id="tablaLibros">
                         <thead>

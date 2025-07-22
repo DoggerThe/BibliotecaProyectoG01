@@ -122,8 +122,20 @@
         case 'EditarPrestamo':
             $prestamoControlador->EditarPrestamo($_POST);
             break;
-        case 'EliminarPrestamo';
+        case 'EliminarPrestamo':
             $prestamoControlador->EliminarPrestamo($_POST);
+            break;
+        case 'CRUDlistarPersonas':
+            $usuarioControlador->CRUDlistarPersonas($_POST);
+            break;
+        case 'registrarUsuarioCRUD':
+            $usuarioControlador->registrarUsuarioCRUD($_POST);
+            break;
+        case 'EditarUsuario':
+            $usuarioControlador->EditarUsuario($_POST);
+            break;
+        case 'EliminarUsuario':
+            $usuarioControlador->EliminarUsuario($_POST);
             break;
         default:
             include 'view/generales/lobby.php';

@@ -67,5 +67,29 @@ class usuarioControlador{
         exit();
 
     }
+    public function CRUDlistarPersonas($post){
+        $resultado = $this->usuarioDao->CRUDlistarPersonas($post);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
+        exit();
+    }
+    public function registrarUsuarioCRUD($post){
+        $resultado = $this->usuarioDao->registrarUsuarioCRUD($post);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
+        exit();
+    }
+    public function EditarUsuario($post){
+        $resultado = $this->usuarioDao->EditarUsuario($post);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
+        exit();
+    }
+    public function EliminarUsuario($post){
+        $resultado = $this->usuarioDao->EliminarUsuario($post);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
+        exit();
+    }
 }
 ?>
