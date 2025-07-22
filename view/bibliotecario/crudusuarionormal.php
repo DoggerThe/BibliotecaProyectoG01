@@ -19,7 +19,7 @@
         <!-- Tabla que mostrará la lista de libros recuperados desde la base de datos -->
         <main class="main-content">
             <div class="columna-izquierda">
-                <h2 class="title-Ingreso">Ingresar Nuevo Bibliotecario</h2>
+                <h2 class="title-Ingreso">Ingresar Nuevo usuario</h2>
                 <div class="contenedor-formulario">
                     <form id="InsertarNuevoUser">
                         <div class="grupo-Libro">
@@ -63,7 +63,7 @@
             </div>
 
             <div class="columna-derecha">
-                <h2 class="title-Ingreso">Lista de prestamos</h2>
+                <h2 class="title-Ingreso">Lista de usuarios</h2>
                 <div class="Container-Tabla">
                     <table id="tablaLibros">
                         <thead>
