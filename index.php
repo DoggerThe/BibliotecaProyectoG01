@@ -113,6 +113,18 @@
         case 'EliminarLibro':
             $librosControlador->EliminarLibro($_POST);
             break;
+        case 'CRUDlistarPrestamos':
+            $prestamoControlador->CRUDlistarPrestamos();
+            break;
+        case 'CRUDinsertarPrestamo':
+            $prestamoControlador->CRUDinsertarPrestamo($_POST);
+            break;
+        case 'EditarPrestamo':
+            $prestamoControlador->EditarPrestamo($_POST);
+            break;
+        case 'EliminarPrestamo';
+            $prestamoControlador->EliminarPrestamo($_POST);
+            break;
         default:
             include 'view/generales/lobby.php';
             break;

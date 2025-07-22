@@ -156,5 +156,33 @@ class prestamoControlador{
         echo json_encode($saneado);
         exit();
     }
+    public function CRUDlistarPrestamos(){
+        $Dao = $this->prestamoDao;
+        $resul = $Dao->CRUDlistarPrestamos();
+        header('Content-Type: application/json');
+        echo json_encode($resul);
+        exit();
+    }
+    public function CRUDinsertarPrestamo($post){
+        $Dao = $this->prestamoDao;
+        $resul = $Dao->CRUDinsertarPrestamo($post);
+        header('Content-Type: application/json');
+        echo json_encode($resul);
+        exit();
+    }
+    public function EditarPrestamo($post){
+        $Dao = $this->prestamoDao;
+        $resul = $Dao->EditarPrestamo($post);
+        header('Content-Type: application/json');
+        echo json_encode($resul);
+        exit();
+    }
+    public function EliminarPrestamo($post){
+        $Dao = $this->prestamoDao;
+        $resul = $Dao->EliminarPrestamo($post);
+        header('Content-Type: application/json');
+        echo json_encode($resul);
+        exit();
+    }
 }
 ?>

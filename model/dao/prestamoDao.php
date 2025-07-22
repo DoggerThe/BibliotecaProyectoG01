@@ -235,5 +235,82 @@ class prestamoDao{
             return [];
         }
     }
+    public function CRUDlistarPrestamos(){
+        try{
+            $con = $this->db;
+            $sql = 'SELECT 
+                        p.id,
+                        u.cedula AS cedula_usuario,
+                        l.titulo AS libro,
+                        p.fecha_solicitud, 
+                        p.fecha_inicio_prestamo, 
+                        p.fecha_fin_prestamo,
+                        e.estado AS estado
+                    FROM prestamo p
+                    INNER JOIN libros l ON p.id_libro = l.id
+                    INNER JOIN estado e ON p.id_estado = e.id
+                    INNER JOIN usuario u ON p.id_usuario = u.id
+                    ORDER BY p.id;';
+            $stmt = $con->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }catch (PDOException $e){
+            var_dump($e->getMessage());
+            error_log('Error: ' . $e->getMessage());
+            return [];
+        }
+    }
+    public function CRUDinsertarPrestamo($post){
+        try{
+            $con = $this->db;
+            $sql = 'INSERT INTO prestamo(id_usuario, id_bibliotecario, id_libro, fecha_solicitud, fecha_inicio_prestamo, fecha_fin_prestamo, id_estado)
+                    VALUES (:id_usuario, :id_bibliotecario, :id_libro, :fecha_solicitud, :fecha_inicio_prestamo, :fecha_fin_prestamo, :id_estado)';
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(":id_usuario",$post["id_usuario"]);
+            $stmt->bindParam(":id_bibliotecario",$post["id_bibliotecario"]);
+            $stmt->bindParam(":id_libro",$post["id_libro"]);
+            $stmt->bindParam(":fecha_solicitud",$post["fecha_solicitud"]);
+            $stmt->bindParam(":fecha_inicio_prestamo",$post["fecha_inicio_prestamo"]);
+            $stmt->bindParam(":fecha_fin_prestamo",$post["fecha_fin_prestamo"]);
+            $stmt->bindValue("id_estado", 1);
+            return $stmt->execute(); 
+        }catch (PDOException $e){
+            var_dump($e->getMessage());
+            error_log('Error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    public function EditarPrestamo($post){
+        try{
+            $con = $this->db;
+            $sql = 'UPDATE prestamo SET
+                    fecha_solicitud = :soli,
+                    fecha_inicio_prestamo = :inic,
+                    fecha_fin_prestamo = :fin
+                    WHERE id = :id';
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':soli', $post['fechaSoli']);
+            $stmt->bindParam(':inic', $post['fechaInic']);
+            $stmt->bindParam(':fin', $post['fechaFin']);
+            $stmt->bindParam(':id', $post['id']);
+            return $stmt->execute();
+        }catch (PDOException $e){
+            error_log('Error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    public function EliminarPrestamo($post){
+        try{
+            $con = $this->db;
+            $sql = 'DELETE FROM prestamo
+                    WHERE id = :id';
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(':id', $post['id']);
+            return $stmt->execute();
+        }catch (PDOException $e){
+            error_log('Error: ' . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>
