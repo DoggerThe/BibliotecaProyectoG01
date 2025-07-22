@@ -36,7 +36,8 @@ class librosDao{
                         FROM 
                             libros l
                         INNER JOIN 
-                            generolibros g ON l.id_genero = g.id';
+                            generolibros g ON l.id_genero = g.id
+                        ORDER BY l.ISBN';
             }else{
                 return [];
             }
@@ -94,6 +95,77 @@ class librosDao{
         } catch (PDOException $e) {
             error_log('Error: ' . $e->getMessage());
             return [];
+        }
+    }
+    //NuevoRegistro.
+    public function insertarLibro($post){
+        try{
+            $revisar = 'SELECT ISBN FROM libros WHERE ISBN = :isbn';
+            $stmt1 = $this->db->prepare($revisar);
+            $stmt1->bindParam(':isbn', $post['isbn']);
+            $stmt1->execute();
+            if($stmt1->fetch()){
+                return false;
+            }else{
+                $sql = 'INSERT INTO libros(ISBN, titulo, id_genero, autor, editorial, cantidad) 
+                        VALUES (:ISBN, :titulo, :id_genero, :autor, :editorial, :cantidad)';
+                $stmt = $this->db->prepare($sql);
+                $stmt->bindParam(':ISBN', $post['isbn']);
+                $stmt->bindParam(':titulo', $post['titulo']);
+                $stmt->bindParam(':id_genero', $post['genero']);
+                $stmt->bindParam(':autor', $post['autor']);
+                $stmt->bindParam(':editorial', $post['editorial']);
+                $stmt->bindParam(':cantidad', $post['cantidad']);
+                return $stmt->execute();
+            }
+            return false;
+        }catch (PDOException $e) {
+            error_log('Error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    public function EditarLibros($post){
+        try {
+            $revisar = 'SELECT ISBN FROM libros WHERE ISBN = :isbn';
+            $stmt1 = $this->db->prepare($revisar);
+            $stmt1->bindParam(':isbn', $post['isbn']);
+            $stmt1->execute();
+            
+            if($stmt1->fetch()) {
+                $sql = 'UPDATE libros SET 
+                        titulo = :titulo, 
+                        id_genero = :id_genero, 
+                        autor = :autor, 
+                        editorial = :editorial, 
+                        cantidad = :cantidad 
+                        WHERE ISBN = :ISBN';
+                
+                $stmt = $this->db->prepare($sql);
+                $stmt->bindParam(':ISBN', $post['isbn']);
+                $stmt->bindParam(':titulo', $post['titulo']);
+                $stmt->bindParam(':id_genero', $post['genero']);
+                $stmt->bindParam(':autor', $post['autor']);
+                $stmt->bindParam(':editorial', $post['editorial']);
+                $stmt->bindParam(':cantidad', $post['cantidad']);
+                
+                return $stmt->execute();
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            error_log('Error: ' . $e->getMessage());
+            return false;
+        }
+    }
+    public function EliminarLibro($post){
+        try{
+            $sql = 'DELETE FROM libros WHERE ISBN = :isbn';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':isbn', $post['isbn']);
+            return $stmt->execute();
+        }catch (PDOException $e) {
+            error_log('Error: ' . $e->getMessage());
+            return false;
         }
     }
 }

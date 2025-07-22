@@ -1,3 +1,4 @@
+//ELIMINAR SI NO SE USAA
 document.addEventListener("DOMContentLoaded", function(){
     fetch('/SistemaBiblioteca/index.php?action=listarLibrosAdmin')
     .then(res => res.json())
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }
     });
 });
+
 function abrirModal(libro){
     const modal = document.getElementById("modal");
     document.getElementById("ISBN_M").value = libro.isbn;

@@ -31,5 +31,29 @@ class librosControlador{
         echo json_encode($resultado);
         exit();
     }
+    public function CRUDlistarLiros(){
+        $resultado = $this->librosDao->listarLibros(2);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
+        exit();
+    }
+    public function CRUDinsertarLibro($post){
+        $resultado = $this->librosDao->insertarLibro($post);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
+        exit();
+    }
+    public function EditarLibros($post){
+        $resultado = $this->librosDao->EditarLibros($post);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
+        exit();
+    }
+    public function EliminarLibro($post){
+        $resultado = $this->librosDao->EliminarLibro($post);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
+        exit();
+    }
 }
 ?>

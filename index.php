@@ -15,6 +15,8 @@
     $librosControlador = new librosControlador($pdo);
     require_once __DIR__ . '/controller/prestamoControlador.php';
     $prestamoControlador = new prestamoControlador($pdo);
+    require_once __DIR__ . '/controller/generoControlador.php';
+    $generoControlador = new generoControlador($pdo);
     //Enrutamientos
     $accion = $_GET['accion'] ?? 'inicio';
 
@@ -95,6 +97,21 @@
             break;
         case 'buscarPrestamos':
             $prestamoControlador->buscarPrestamos($_POST);
+            break;
+        case 'CRUDlistarLiros':
+            $librosControlador->CRUDlistarLiros();
+            break;
+        case 'CRUDinsertarLibro':
+            $librosControlador->CRUDinsertarLibro($_POST);
+            break;
+        case 'ListarGeneros':
+            $generoControlador->ListarGeneros();
+            break;
+        case 'EditarLibros':
+            $librosControlador->EditarLibros($_POST);
+            break;
+        case 'EliminarLibro':
+            $librosControlador->EliminarLibro($_POST);
             break;
         default:
             include 'view/generales/lobby.php';
