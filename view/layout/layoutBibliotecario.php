@@ -18,5 +18,9 @@
         <button class="menu-button" onclick="location.href='index.php?accion=SolicPrestBibli'">Solicitudes de Préstamos</button>
         <!-- Acceso al historial de préstamos registrados en el sistema -->
         <button class="menu-button" onclick="location.href='index.php?accion=ListadoPrestBibli'">Listado de Préstamos</button>
+        <button class="menu-button" onclick="location.href='index.php?accion=CRUDbibliotecario'">Listado de bilbiotecarios</button>
+        <button class="menu-button" onclick="location.href='index.php?accion=CRUDlibros'">Listado de libros</button>
+        <button class="menu-button" onclick="location.href='index.php?accion=CRUDprestamos'">CRUD de Préstamos</button>
+        <button class="menu-button" onclick="location.href='index.php?accion=CRUDusaurios'">Listado de usuarios</button>
     </div>
 </aside>

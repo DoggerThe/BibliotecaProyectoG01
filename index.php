@@ -64,6 +64,18 @@
         case 'ListadoPrestBibli':
             include 'view/bibliotecario/ListadoPrestBibli.php';
             break;
+        case 'CRUDbibliotecario':
+            include 'view/bibliotecario/crudbibliotecario.php';
+            break;
+        case 'CRUDlibros':
+            include 'view/bibliotecario/crudLibros.php';
+            break;
+        case 'CRUDprestamos':
+            include 'view/bibliotecario/crudprestamos.php';
+            break;
+        case 'CRUDusaurios':
+            include 'view/bibliotecario/crudusuarionormal.php';
+            break;
         //rutas de controlladores
         case 'registrarUsuario':
             $usuarioControlador->procesarRegistro($_POST);
